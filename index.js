@@ -2,15 +2,17 @@ const fs = require('fs')
 const {Telegraf} = require('telegraf')
 const { Deepgram } = require("@deepgram/sdk");
 const OpenAI = require("openai");
+const dotenv = require('dotenv')
+dotenv.config()
 
 const openai = new OpenAI({
-  apiKey: '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', // defaults to process.env["OPENAI_API_KEY"]
+  apiKey: process.env.Apikey, 
 });
 
 
 
 const deepgram = new Deepgram('7e152e9866bbc69d6487e1bea4b6c250aeeab7ca');
-const BOT_TOKEN ='6124695087:AAG0NprnUOPuxyaHA_79ZDazy870_007Dtk'
+const BOT_TOKEN ='6124695087:AAG2TZUf4KjJrBQUM9OiO8DV6dSUwScqZ2A'
 const bot = new Telegraf(BOT_TOKEN)
 bot.on('audio', async (ctx)=>{
 	const fileId= ctx.message.audio.file_id
@@ -30,7 +32,7 @@ bot.on('audio', async (ctx)=>{
     temperature: 0,
   });
 
-  ctx.replyWithHTML("<b>OverallScore</b> "+completion.choices[0].text);
+  ctx.replyWithHTML(`<b>Speaking Result: </b> ${completion.choices[0].text}\n <i>Powered by @examonline_edumo</i>`);
 })
 
 
